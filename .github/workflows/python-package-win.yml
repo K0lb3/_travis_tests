@@ -46,7 +46,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest
+        pytest -v -s
       
     - name: Build and publish
       env:
