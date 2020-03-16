@@ -2,7 +2,7 @@ from setuptools import setup, Extension, find_packages
 import os
 
 setup(
-    name="_travis_tests",
+    name="travis_test",
     description="-",
     author="K0lb3",
     version="0.9.0",
