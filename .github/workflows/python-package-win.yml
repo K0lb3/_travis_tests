@@ -1,0 +1,41 @@
+name: Test Windows
+
+on: [push, pull_request]
+
+jobs:
+  deploy:
+
+    runs-on: windows-2019
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.5", "3.6", "3.7", "3.8"]
+        architecture: ["x86", "x64"]
+        include:
+          - architecture: "x86"
+            platform-vcvars: "x86"
+            platform-msbuild: "Win32"
+          - architecture: "x64"
+            platform-vcvars: "x86_amd64"
+            platform-msbuild: "x64"
+    timeout-minutes: 30
+
+    name: Python ${{ matrix.python-version }} ${{ matrix.architecture }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
