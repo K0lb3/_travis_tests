@@ -2,14 +2,11 @@ from setuptools import setup, Extension, find_packages
 import os
 
 setup(
-    name="travis_test",
+    name="_travis_tests",
     description="-",
     author="K0lb3",
     version="0.9.0",
-    keywords=['astc', 'atc', 'pvrtc', "etc", "crunch"],
-    url="https://github.com/K0lb3/travis_test",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
+    url="https://github.com/K0lb3/_travis_tests",
     ext_modules=[
         Extension(
             "travis_test",
