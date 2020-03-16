@@ -1,4 +1,4 @@
-name: Test Ubuntu and MacOs
+name: Test and Publish
 
 on: [push, pull_request]
 
@@ -19,11 +19,12 @@ jobs:
           "3.6",
           "3.5",
         ]
+        architecture: ["x86", "x64"]
     
     timeout-minutes: 30
 
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} Python ${{ matrix.python-version }}
+    name: ${{ matrix.os }} ${{ matrix.architecture }} Python ${{ matrix.python-version }}
 
     steps:
     - uses: actions/checkout@v2
@@ -52,6 +53,7 @@ jobs:
         pytest -v -s
       
     - name: Build and publish
+      if: (success() && (${{ matrix.os }} != ubuntu-latest)) 
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
