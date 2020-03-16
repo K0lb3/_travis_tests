@@ -19,7 +19,6 @@ jobs:
           "3.6",
           "3.5",
         ]
-        architecture: ["x86", "x64"]
     
     timeout-minutes: 30
 
