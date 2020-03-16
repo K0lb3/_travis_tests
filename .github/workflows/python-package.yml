@@ -9,9 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [
-          "ubuntu-latest",
-          "macOS-latest",
-          "windows-2019"
+          "ubuntu-latest"
         ]
         python-version: [
           "3.8",
@@ -53,7 +51,7 @@ jobs:
         pytest -v -s
       
     - name: Build and publish
-      if: ( success() && ( ! (startsWith( ${{ matrix.os }} , "ubuntu-latest" ) ) ) ) 
+      if: matrix.os != "ubuntu" 
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
